@@ -19,9 +19,14 @@ defmodule EctoAnon.Functions.AnonymizedEmailTest do
       end
     end
 
-    test "with partial option, returns a partial email" do
-      assert AnonymizedEmail.run(:string, "john.doe@email.com", partial: true) ==
-               "j******@e******.com"
+    test "with partial boolean option set to false, returns anonymized email" do
+      anonymized_email = AnonymizedEmail.run(:string, "john.doe@email.fr", partial: false)
+      assert Regex.match?(~r/.+@.+\.com/, anonymized_email)
+    end
+
+    test "with partial boolean option, returns a partial email" do
+      assert AnonymizedEmail.run(:string, "john.doe@email.fr", partial: true) ==
+               "j******@e******.fr"
     end
   end
 end

@@ -30,7 +30,7 @@ defmodule EctoAnon.Functions.AnonymizedEmail do
     |> Regex.named_captures(value)
     |> case do
       %{"username" => username, "domain" => domain, "tld" => tld} ->
-        if opts[:partial] do
+        if Keyword.get(opts, :partial, false) do
           String.first(username) <> "******@" <> String.first(domain) <> "******" <> tld
         else
           Helpers.generate_hash(username) <> "@" <> Helpers.generate_hash(domain) <> ".com"
